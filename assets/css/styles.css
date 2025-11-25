@@ -22,7 +22,22 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap; 
 }
+
+/* --- ESTILO BASE PARA EL ELEMENTO .box --- */
+.box {
+    padding: 20px;
+    margin: 10px;
+    background-color: var(--color-dark-bg);
+    border: 1px solid var(--color-secondary);
+    color: var(--color-text-light);
+    box-sizing: border-box;
+    min-height: 150px;
+    text-align: center;
+}
+/* -------------------------------------------------------------------------- */
 
 h1, h2 {
     line-height: 1.2;
@@ -194,7 +209,72 @@ h1, h2 {
     font-size: 0.9rem;
 }
 
-@media (min-width: 768px) {
+/* -------------------------------------------------------------------------- */
+/* --- MEDIA QUERIES APLICANDO LA PALETA DE COLORES EXISTENTE --- */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Móviles pequeños (max-width: 900px) */
+/* Rango unificado para que se apile en móvil y tableta */
+@media (max-width: 900px){
+    body{
+        background: var(--color-darker-bg); 
+        color: var(--color-primary);
+    }
+
+    .container{
+        flex-direction: column;
+        align-items: center;
+    }
+    .box{
+        width: 90%;
+        background-color: var(--color-secondary);
+    }
+    /* **CLAVE**: Mantenemos el grid APILADO (1 columna) hasta los 900px */
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+/* -------------------------------------------------------------------------- */
+
+/* 2. Escritorio Medio (min-width: 901px) */
+/* Aquí el diseño debe volver a ser HORIZONTAL */
+@media (min-width: 901px) and (max-width: 1200px){
+    body{
+        background: radial-gradient(circle at center, var(--color-dark-bg) 0%, var(--color-darker-bg) 100%);
+        color: var(--color-text-light);
+    }
+
+    .container{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .box{
+        flex: 1 1 45%;
+        background-color: var(--color-dark-bg);
+        border-color: var(--color-primary);
+    }
+    /* **CLAVE**: Forzamos 2 columnas para que sean horizontales en escritorios más pequeños */
+    .grid-layout {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+/* 3. Escritorio grande (min-width: 1201px) */
+@media (min-width: 1201px){
+    body{
+        color: var(--color-text-light);
+    }
+    
+    .container{
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    .box{
+        flex: 1 1 20%;
+        background-color: #1a202c;
+        border-color: var(--color-primary);
+    }
+    /* **CORREGIDO**: Vuelve a 2 columnas para que los 2 elementos cubran todo el ancho. */
     .grid-layout {
         grid-template-columns: repeat(2, 1fr);
     }
