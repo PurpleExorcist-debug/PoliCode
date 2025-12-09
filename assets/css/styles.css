@@ -18,90 +18,110 @@ body {
     min-height: 100vh;
 }
 
+/* =========================================
+   ESTILOS GENERALES Y LAYOUT
+   ========================================= */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    flex-wrap: wrap; 
-}
-
-.box {
-    padding: 20px;
-    margin: 10px;
-    background-color: var(--color-dark-bg);
-    border: 1px solid var(--color-secondary);
-    color: var(--color-text-light);
-    box-sizing: border-box;
-    min-height: 150px;
-    text-align: center;
+    /* En Bootstrap, el container ya maneja padding, pero ajustamos si es necesario */
 }
 
 h1, h2 {
     line-height: 1.2;
 }
 
+/* El layout principal dentro del main para controlar el espaciado */
+.layout-principal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* =========================================
+   HEADER Y NAVBAR
+   ========================================= */
 .header {
     background-color: rgba(10, 14, 26, 0.95);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1000; /* Z-index alto para estar sobre todo */
+    padding: 10px 0;
 }
 
-.barraNavegacion {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
+.custom-navbar {
+    padding: 0;
+    background: transparent !important; /* Usamos el fondo del .header */
 }
 
 .logo {
     font-size: 1.8rem;
     font-weight: 800;
-    color: var(--color-primary);
+    color: var(--color-primary) !important;
 }
 
 .logo span {
     color: var(--color-secondary);
 }
 
-.nav-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 20px;
+/* --- Estilos del Botón Hamburguesa (Responsive) --- */
+.navbar-toggler {
+    border: 2px solid var(--color-secondary);
+    transition: all 0.3s ease;
+    outline: none;
 }
 
-.nav-links li {
-    display: inline-block;
+/* Icono SVG coloreado */
+.navbar-toggler-icon {
+    filter: invert(1) grayscale(100%) brightness(1.5) sepia(1) hue-rotate(100deg) saturate(3);
 }
 
-.nav-links a {
-    text-decoration: none;
+/* Animación: Al pasar el mouse por la hamburguesa */
+.navbar-toggler:hover {
+    background-color: rgba(147, 112, 219, 0.2); /* Fondo secondary suave */
+    transform: scale(1.05); /* Crece un poco */
+    box-shadow: 0 0 10px var(--color-primary); /* Brillo primary */
+}
+
+/* Animación: Estado activo (Menú abierto) */
+/* Bootstrap añade aria-expanded="true" cuando está abierto */
+.navbar-toggler[aria-expanded="true"] {
+    background-color: var(--color-secondary);
+    transform: rotate(90deg); /* Gira 90 grados al abrir */
+    border-color: var(--color-primary);
+}
+
+/* --- Enlaces de Navegación --- */
+.custom-navbar .navbar-nav .nav-link {
     color: var(--color-text-light);
     padding: 8px 15px;
     border-radius: 8px;
     transition: background-color 0.3s, color 0.3s;
     font-weight: 600;
+    margin: 0 5px;
 }
 
-.nav-links a:hover {
+.custom-navbar .navbar-nav .nav-link:hover {
     background-color: var(--color-secondary);
     color: var(--color-text-light);
 }
 
-.active-link {
+.custom-navbar .navbar-nav .nav-link.active {
     background-color: var(--color-primary); 
-    color: var(--color-dark-bg);
+    color: var(--color-dark-bg) !important; 
 }
 
+/* =========================================
+   CONTENIDO PRINCIPAL
+   ========================================= */
 .main-content {
     padding-top: 40px;
     padding-bottom: 60px;
 }
 
+/* Sección Bienvenida */
 .seccionBienvenida {
     text-align: center;
     padding: 60px 20px;
@@ -110,6 +130,7 @@ h1, h2 {
     border-radius: 12px;
     border: 1px solid rgba(147, 112, 219, 0.3);
     box-shadow: 0 5px 20px rgba(147, 112, 219, 0.2);
+    width: 100%;
 }
 
 .seccionBienvenida h1 {
@@ -126,19 +147,25 @@ h1, h2 {
     margin: 0 auto;
 }
 
+/* --- GRID Y TARJETAS INTERACTIVAS --- */
 .grid-layout {
     display: grid;
-    grid-template-columns: 1fr;
+    /* Por defecto móvil: 1 columna */
+    grid-template-columns: 1fr; 
     gap: 30px;
     margin-bottom: 40px;
+    width: 100%;
 }
 
+/* Estilo Base de la Tarjeta */
 .card {
-    background-color: #1a202c;
+    background-color: var(--color-dark-bg);
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(147, 112, 219, 0.2); 
+    border: 1px solid rgba(147, 112, 219, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden; /* Importante para que el zoom de la imagen no salga de la tarjeta */
 }
 
 .card h2 {
@@ -148,42 +175,53 @@ h1, h2 {
     margin-bottom: 15px;
 }
 
-.image-placeholder {
+/* Contenedor de la imagen */
+.contenedor-imagen {
     width: 100%;
     height: 200px;
     background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
     border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px dashed var(--color-text-light);
+    overflow: hidden; /* Asegura que la imagen no se salga al hacer zoom */
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
-    border: 2px dashed var(--color-text-light);
 }
 
-.image-placeholder p {
-    color: var(--color-dark-bg);
-    font-weight: 700;
-}
-
-.img-principal {
+/* La imagen en sí */
+.img-zoom {
     width: 100%;
-    height: 200px;
-    background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-    border: 2px dashed var(--color-text-light);
-    overflow: hidden; 
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease; /* Transición suave para el zoom */
 }
 
+/* --- ANIMACIONES DE INTERACCIÓN (Hover / Tap) --- */
+.card-interactiva:hover {
+    transform: translateY(-10px); /* Mueve la tarjeta hacia arriba */
+    box-shadow: 0 15px 30px rgba(59, 226, 211, 0.15); /* Sombra brillante color primary */
+    border-color: var(--color-primary);
+    cursor: pointer;
+}
+
+.card-interactiva:hover .img-zoom {
+    transform: scale(1.15); /* Zoom in de la imagen al pasar el mouse por la tarjeta */
+}
+
+/* Efecto al hacer click (Active) en la tarjeta */
+.card-interactiva:active {
+    transform: scale(0.98); /* Efecto sutil de presión */
+}
+
+/* Sección de Contenido */
 .content-section {
-    background-color: #1a202c;
+    background-color: var(--color-dark-bg);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     margin-bottom: 40px;
+    width: 100%;
 }
 
 .content-section h2 {
@@ -195,75 +233,35 @@ h1, h2 {
     margin-bottom: 20px;
 }
 
-.content-section p {
-    color: var(--color-text-dim);
-}
-
 .footer {
     border-top: 1px solid rgba(147, 112, 219, 0.1); 
     padding: 20px 0;
     text-align: center;
     color: var(--color-text-dim);
     font-size: 0.9rem;
+    background-color: var(--color-darker-bg);
 }
 
-@media (max-width: 900px){
-    body{
-        background: var(--color-darker-bg); 
-        color: var(--color-primary);
-    }
-
-    .container{
-        flex-direction: column;
-        align-items: center;
-    }
-    .box{
-        width: 90%;
-        background-color: var(--color-secondary);
-    }
-    
-    .grid-layout {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (min-width: 901px) and (max-width: 1200px){
-    body{
-        background: radial-gradient(circle at center, var(--color-dark-bg) 0%, var(--color-darker-bg) 100%);
-        color: var(--color-text-light);
-    }
-
-    .container{
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    .box{
-        flex: 1 1 45%;
-        background-color: var(--color-dark-bg);
-        border-color: var(--color-primary);
-    }
-    
-    .grid-layout {
-        grid-template-columns: repeat(2, 1fr); 
-    }
-}
-
-@media (min-width: 1201px){
-    body{
-        color: var(--color-text-light);
-    }
-    
-    .container{
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
-    .box{
-        flex: 1 1 20%;
-        background-color: #1a202c;
-        border-color: var(--color-primary);
-    }
-    
+@media (min-width: 768px) {
     .grid-layout {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (max-width: 991.98px) {
+    .custom-navbar .navbar-nav {
+        text-align: center;
+        background-color: var(--color-dark-bg);
+        padding: 20px 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        margin-top: 10px;
+    }
+    
+    .navbar-collapse {
+        background-color: var(--color-darker-bg); 
+        border-radius: 0 0 10px 10px;
     }
 }
